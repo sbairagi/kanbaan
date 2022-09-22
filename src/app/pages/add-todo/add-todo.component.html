@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Add Todo</h1>
+<div mat-dialog-content>
+  <!-- <p>{{editData.desc}}</p> -->
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="title">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancle</button>
+  <button mat-button [mat-dialog-close]="data" (click)="save()" cdkFocusInitial>Ok</button>
+</div>
