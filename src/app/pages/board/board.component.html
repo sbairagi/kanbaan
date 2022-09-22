@@ -16,7 +16,7 @@
                     class="example-list"
                     (cdkDropListDropped)="drop($event)">
                     <div class="example-box" *ngFor="let item of todo" cdkDrag>
-                        {{item.title}} shubham
+                        {{item.title}}
                         <span>
                             <i class="fa fa-edit m-2" style="font-size:48px; font-size:14px; color:green; cursor: pointer;" (click)="openDialog(item)"></i>
                             <i class="fa fa-trash m-1" style="color:red; cursor: pointer;" (click)="deleteTodo(item.id, 'todo')" ></i>
