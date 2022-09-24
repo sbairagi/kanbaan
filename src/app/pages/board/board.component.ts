@@ -21,6 +21,7 @@ export class BoardComponent implements OnInit {
   constructor(public dialog: MatDialog, public todoServices: TodoService) {
     todoServices.todo.subscribe(data => {
       this.todo = data
+      console.log(data)
     });
     todoServices.done.subscribe(data => {
       this.done = data
