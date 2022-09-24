@@ -56,7 +56,7 @@ export class AddTodoComponent implements OnInit {
         this.todoServices.inprogress.subscribe(data => {
           this.id += data.length
         })
-        this.todos.push({'id': this.id, 'title': this.addTodoForm.controls['title'].value, "status": 'todo'})
+        this.todos.push({'id': this.id, 'title': this.addTodoForm.controls['title'].value, "desc": this.addTodoForm.controls['description'].value, "status": 'todo'})
         this.todoServices.todo.next(this.todos)
       } else if (this.addTodoForm.value.changeStatus === 'done'){
         this.todoServices.todo.subscribe(data => {
@@ -69,7 +69,7 @@ export class AddTodoComponent implements OnInit {
         this.todoServices.inprogress.subscribe(data => {
           this.id += data.length
         })
-        this.todos.push({'id': this.id, 'title': this.addTodoForm.controls['title'].value, "status": "done"})
+        this.todos.push({'id': this.id, 'title': this.addTodoForm.controls['title'].value, "desc": this.addTodoForm.controls['description'].value, "status": "done"})
         this.todoServices.done.next(this.todos)
       } else if (this.addTodoForm.value.changeStatus === 'inprogress'){
         this.todoServices.todo.subscribe(data => {
@@ -82,7 +82,7 @@ export class AddTodoComponent implements OnInit {
           this.id += data.length
           this.todos = data;
         })
-        this.todos.push({'id': this.id, 'title': this.addTodoForm.controls['title'].value, "status": "inprogress"})
+        this.todos.push({'id': this.id, 'title': this.addTodoForm.controls['title'].value, "desc": this.addTodoForm.controls['description'].value, "status": "inprogress"})
         this.todoServices.inprogress.next(this.todos)
       }
     }
