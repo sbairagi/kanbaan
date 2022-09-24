@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 /* Angular material */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './materialModule/angular-material.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MyModalComponent } from './pages/my-modal/my-modal.component';
 import { BoardComponent } from './pages/board/board.component';
+import { AppRoutingModule } from './app-routing.module';
 
 // import { StudentModel } from './studentRepository.model';
 // import { SimpleDataSource } from './datasource.model';
@@ -25,6 +26,8 @@ import { AddTodoComponent } from './pages/add-todo/add-todo.component';
     BrowserModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
+    ReactiveFormsModule,
+    AppRoutingModule ,
     FormsModule,
     DragDropModule
   ],

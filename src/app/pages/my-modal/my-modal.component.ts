@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TodoService } from '../../todo.service';
+import { TodoService } from '../../service/todo.service';
 
 
 @Component({
@@ -10,48 +11,131 @@ import { TodoService } from '../../todo.service';
 })
 export class MyModalComponent implements OnInit {
 
-  editdata;
-  title = ''
+  id: any;
+  title: string = '';
+  preStatus: string = '';
+  todos: any;
+  editTodoForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    description: new FormControl('',  Validators.required),
+    changeStatus: new FormControl('', [Validators.required])
+  });
+  status = [
+    {'text': 'Todo', 'id': 'todo'},
+    {'text': 'Done', 'id': 'done'},
+    {'text': 'In Progress', 'id': 'inprogress'},
+  ];
+  todo: any = []
+  done: any = []
+  inprogress: any = [] 
 
   constructor(
     public dialogRef: MatDialogRef<MyModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private todoServices: TodoService) 
   {
-    this.editdata = data;
+    this.id = data.id;
+    this.preStatus = data.status
+    todoServices.todo.subscribe(data => {
+      this.todo = data
+    });
+    todoServices.done.subscribe(data => {
+      this.done = data
+    });
+    todoServices.inprogress.subscribe(data => {
+      this.inprogress = data
+    })
     this.title = data.title;
+    this.editTodoForm.setValue({title: data.title, description: data.desc, changeStatus: data.status});
    }
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
 
   ngOnInit() {
   }
 
+  close(): void {
+    this.dialogRef.close();
+  }
+
   save(){
-    if (this.editdata.status == 'todo'){
-      this.todoServices.todo.subscribe(res => {
-        res.map(item => {
-          if (item.id == this.editdata.id){
-            item['title'] = this.title
-          }
+    if (this.editTodoForm.value.changeStatus == this.preStatus){
+      if (this.editTodoForm.value.changeStatus == 'todo'){
+        this.todoServices.todo.subscribe(res => {
+          res.map(item => {
+            if (item.id == this.id){
+              item['title'] = this.editTodoForm.value.title
+              item['desc'] = this.editTodoForm.value.description
+            }
+          });
         });
-      });
-    }else if (this.editdata.status ==  'done'){
-      this.todoServices.done.subscribe(res => {
-        res.map(item => {
-          if (item.id == this.editdata.id){
-            item['title'] = this.title
-          }
+      }else if (this.editTodoForm.value.changeStatus ==  'done'){
+        this.todoServices.done.subscribe(res => {
+          res.map(item => {
+            if (item.id == this.id){
+              item['title'] = this.editTodoForm.value.title
+              item['desc'] = this.editTodoForm.value.description
+            }
+          });
         });
-      });
-    }else if (this.editdata.status == 'inprogress'){
-      this.todoServices.inprogress.subscribe(res => {
-        res.map(item => {
-          if (item.id == this.editdata.id){
-            item['title'] = this.title
-          }
+      }else if (this.editTodoForm.value.changeStatus == 'inprogress'){
+        this.todoServices.inprogress.subscribe(res => {
+          res.map(item => {
+            if (item.id == this.id){
+              item['title'] = this.editTodoForm.value.title
+              item['desc'] = this.editTodoForm.value.description
+            }
+          });
         });
-      });
+      }
+    }
+    else{
+      if (this.preStatus == "todo"){
+        this.todoServices.todo.next(this.todo.filter(x => x.id != this.id))
+      }else if (this.preStatus == "done") {
+        this.todoServices.done.next(this.done.filter(x => x.id != this.id))
+      }else if(this.preStatus == 'inprogress') {
+        this.todoServices.inprogress.next(this.inprogress.filter(x => x.id != this.id))
+      }
+
+      if (this.editTodoForm.value.changeStatus === 'todo'){
+        this.todoServices.todo.subscribe(data => {
+          this.id = data.length + 1
+          this.todos = data;
+        })
+        this.todoServices.done.subscribe(data => {
+          this.id += data.length
+        })
+        this.todoServices.inprogress.subscribe(data => {
+          this.id += data.length
+        })
+        this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value,  "status": 'todo'})
+        this.todoServices.todo.next(this.todos)
+      } else if (this.editTodoForm.value.changeStatus === 'done'){
+        this.todoServices.todo.subscribe(data => {
+          this.id = data.length + 1
+        })
+        this.todoServices.done.subscribe(data => {
+          this.id += data.length
+          this.todos = data;
+        })
+        this.todoServices.inprogress.subscribe(data => {
+          this.id += data.length
+        })
+        this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value, "status": "done"})
+        this.todoServices.done.next(this.todos)
+      } else if (this.editTodoForm.value.changeStatus === 'inprogress'){
+        this.todoServices.todo.subscribe(data => {
+          this.id = data.length + 1
+        })
+        this.todoServices.done.subscribe(data => {
+          this.id += data.length
+        })
+        this.todoServices.inprogress.subscribe(data => {
+          this.id += data.length
+          this.todos = data;
+        })
+        this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value, "status": "inprogress"})
+        this.todoServices.inprogress.next(this.todos)
+      }
+    
     }
   }
 }

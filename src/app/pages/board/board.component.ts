@@ -3,7 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { MyModalComponent } from 'src/app/pages/my-modal/my-modal.component';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { AddTodoComponent } from '../add-todo/add-todo.component';
-import { TodoService } from 'src/app/todo.service';
+import { TodoService } from 'src/app/service/todo.service';
 
 
 @Component({
@@ -13,20 +13,9 @@ import { TodoService } from 'src/app/todo.service';
 })
 export class BoardComponent implements OnInit {
 
-  // constructor() { }
-
-  name: string;
-  color: string;
   todo: any = []
-
   done: any = []
   inprogress: any = [] 
-
-  // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-
-  // done = ['Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-
-  // inprogress = ['Get up', ];
 
 
   constructor(public dialog: MatDialog, public todoServices: TodoService) {
@@ -40,25 +29,6 @@ export class BoardComponent implements OnInit {
       this.inprogress = data
     })
    }
-
-  openDialog(data: any) {
-    const dialogRef = this.dialog.open(MyModalComponent, {
-      width: '250px',
-      data: data
-    });
-    dialogRef.afterClosed().subscribe(res => {
-      this.color = res;
-    });
-  }
-
-  addTodo() {
-    const dialogRef = this.dialog.open(AddTodoComponent, {
-      width: '250px'
-    });
-    dialogRef.afterClosed().subscribe(res => {
-      this.color = res;
-    });
-  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -100,14 +70,32 @@ export class BoardComponent implements OnInit {
   }
 
   deleteTodo(id: number, status: string){
-    console.log(id, status)
     if (status === 'todo'){
-      this.todo = this.todo.filter(x => x.id != id);
+      this.todoServices.todo.next(this.todo.filter(x => x.id != id))
     }else if (status === 'done'){
-      this.done = this.done.filter(x => x.id != id);
-    }else{
-      this.inprogress = this.inprogress.filter(x => x.id != id);
+      this.todoServices.done.next(this.done.filter(x => x.id != id))
+    }else if(status === 'inprogress'){
+      this.todoServices.inprogress.next(this.inprogress.filter(x => x.id != id))
     }
+  }
+
+  editNote(data: any) {
+    const dialogRef = this.dialog.open(MyModalComponent, {
+      width: '250px',
+      data: data
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      
+    });
+  }
+
+  addNote() {
+    const dialogRef = this.dialog.open(AddTodoComponent, {
+      width: '250px'
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      
+    });
   }
 
 }
