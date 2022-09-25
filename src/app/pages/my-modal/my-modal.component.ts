@@ -11,7 +11,7 @@ import { TodoService } from '../../service/todo.service';
 })
 export class MyModalComponent implements OnInit {
 
-  id: any;
+  id: any = 0;
   title: string = '';
   preStatus: string = '';
   todos: any;
@@ -104,41 +104,20 @@ export class MyModalComponent implements OnInit {
 
         if (this.editTodoForm.value.changeStatus === 'todo'){
           this.todoServices.todo.subscribe(data => {
-            this.id = data.length + 1
             this.todos = data;
-          })
-          this.todoServices.done.subscribe(data => {
-            this.id += data.length
-          })
-          this.todoServices.inprogress.subscribe(data => {
-            this.id += data.length
           })
           this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value,  "status": 'todo'})
           this.todoServices.todo.next(this.todos)
           this.todoServices.saveData('todo', this.todos)
         } else if (this.editTodoForm.value.changeStatus === 'done'){
-          this.todoServices.todo.subscribe(data => {
-            this.id = data.length + 1
-          })
           this.todoServices.done.subscribe(data => {
-            this.id += data.length
             this.todos = data;
-          })
-          this.todoServices.inprogress.subscribe(data => {
-            this.id += data.length
           })
           this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value, "status": "done"})
           this.todoServices.done.next(this.todos)
           this.todoServices.saveData('done', this.todos)
         } else if (this.editTodoForm.value.changeStatus === 'inprogress'){
-          this.todoServices.todo.subscribe(data => {
-            this.id = data.length + 1
-          })
-          this.todoServices.done.subscribe(data => {
-            this.id += data.length
-          })
           this.todoServices.inprogress.subscribe(data => {
-            this.id += data.length
             this.todos = data;
           })
           this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value, "status": "inprogress"})
