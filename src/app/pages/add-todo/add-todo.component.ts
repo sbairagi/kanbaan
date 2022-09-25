@@ -23,7 +23,7 @@ export class AddTodoComponent implements OnInit {
   addTodoForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
     description: new FormControl('',  [Validators.required, Validators.minLength(25)]),
-    changeStatus: new FormControl('', [Validators.required])
+    changeStatus: new FormControl(null, [Validators.required])
   });
 
 
