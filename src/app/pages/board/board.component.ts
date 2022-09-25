@@ -43,8 +43,8 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex,
       );
-      this.setStatus();
     }
+    this.setStatus();
   }
   
   ngOnInit(): void {
