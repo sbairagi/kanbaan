@@ -16,8 +16,8 @@ export class MyModalComponent implements OnInit {
   preStatus: string = '';
   todos: any;
   editTodoForm = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')]),
-    description: new FormControl('',  Validators.required),
+    title: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+    description: new FormControl('',  [Validators.required, Validators.minLength(25)]),
     changeStatus: new FormControl('', [Validators.required])
   });
   status = [

@@ -7,11 +7,34 @@
       <mat-label>Title</mat-label>
       <input matInput type="text"  formControlName="title">
     </mat-form-field>
+
+    <!-- <div *ngIf="addTodoForm.title.invalid && (name.dirty || name.touched)"
+        class="alert"> -->
+
+    <div *ngIf="addTodoForm['controls'].title.hasError('required') && addTodoForm['controls'].title.touched" class="cross-validation-error-message alert alert-danger" style="width: 89%; font-size: 11px;
+    padding: 3px;">
+        Title is required.!!
+    </div>
+
+    <div *ngIf="addTodoForm['controls'].title.hasError('pattern') && addTodoForm['controls'].title.touched" class="cross-validation-error-message alert alert-danger" style="width: 89%; font-size: 11px;
+    padding: 3px;">
+      Only character are allowed.!!
+    </div>
   
     <mat-form-field>
       <mat-label>Description</mat-label>
       <textarea matInput type="text" formControlName="description"></textarea>
     </mat-form-field>
+
+    <div *ngIf="addTodoForm['controls'].description.hasError('required') && addTodoForm['controls'].description.touched" class="cross-validation-error-message alert alert-danger" style="width: 89%; font-size: 11px;
+    padding: 3px;">
+        Title is required.!!
+    </div>
+
+    <div *ngIf="addTodoForm['controls'].description.hasError('minlength') && addTodoForm['controls'].description.touched" class="cross-validation-error-message alert alert-danger" style="width: 89%; font-size: 11px;
+    padding: 3px;">
+      Minimum character length is 25.!!
+    </div>
 
     <mat-form-field appearance="fill" style="width: 180px;">
       <mat-label>Status</mat-label>
