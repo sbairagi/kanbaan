@@ -35,7 +35,8 @@
 
     <mat-form-field appearance="fill" style="width: 180px;">
       <mat-label>Status</mat-label>
-      <select matNativeControl placeholder="Select Status" required formControlName="changeStatus">
+      <select matNativeControl required formControlName="changeStatus">
+        <option [value]="null"></option>
         <option *ngFor="let item of status" [value]="item.id">{{item.text}}</option>
       </select>
     </mat-form-field>
