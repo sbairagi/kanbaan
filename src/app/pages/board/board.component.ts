@@ -19,6 +19,9 @@ export class BoardComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, public todoServices: TodoService) {
+    this.todoServices.getData('todo');
+    this.todoServices.getData('done');
+    this.todoServices.getData('inprogress');
     todoServices.todo.subscribe(data => {
       this.todo = data
     });
@@ -40,42 +43,41 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex,
       );
-      this.setStatus(event);
+      this.setStatus();
     }
   }
   
   ngOnInit(): void {
   }
 
-  setStatus(event){
-      if (event.container.data[0]['status'] == 'todo'){
-        this.todoServices.todo.subscribe(data => {
-          data.map(x => {
-            x['status'] = 'todo'
-          });
-        });
-      }else if (event.container.data[0]['status'] == 'done'){
-        this.todoServices.done.subscribe(data => {
-          data.map(x => {
-            x['status'] = 'done'
-          });
-        });
-      }else if (event.container.data[0]['status'] == 'inprogress'){
-        this.todoServices.inprogress.subscribe(data => {
-          data.map(x => {
-            x['status'] = 'inprogress'
-          });
-        });
-      }
+  setStatus(){
+    this.inprogress.map(x => {
+      x['status'] = 'inprogress'
+    });
+    this.done.map(x => {
+      x['status'] = 'done'
+    });
+    this.todo.map(x => {
+      x['status'] = 'todo'
+    });
+    this.todoServices.saveData('todo', this.todo)
+    this.todoServices.getData('todo');
+    this.todoServices.saveData('done', this.done)
+    this.todoServices.getData('done');
+    this.todoServices.saveData('inprogress', this.inprogress)
+    this.todoServices.getData('inprogress');
   }
 
   deleteTodo(id: number, status: string){
     if (status === 'todo'){
       this.todoServices.todo.next(this.todo.filter(x => x.id != id))
+      this.todoServices.saveData('todo', this.todo.filter(x => x.id != id))
     }else if (status === 'done'){
       this.todoServices.done.next(this.done.filter(x => x.id != id))
+      this.todoServices.saveData('done', this.done.filter(x => x.id != id))
     }else if(status === 'inprogress'){
       this.todoServices.inprogress.next(this.inprogress.filter(x => x.id != id))
+      this.todoServices.saveData('inprogress', this.inprogress.filter(x => x.id != id))
     }
   }
 

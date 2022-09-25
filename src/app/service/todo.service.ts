@@ -7,23 +7,39 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TodoService {
 
-  todo: BehaviorSubject<any> = new BehaviorSubject([
-    {'id': 1, 'title': "Get to work", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'todo'},
-    {'id': 2, 'title': "Pick up groceries",  "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'todo'},
-    {'id': 3, 'title': "Fall asleep",  "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'todo'},
-    {'id': 4, 'title': "Go home",  "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'todo'},
-  ]);
+  todo: BehaviorSubject<any> = new BehaviorSubject([]);
 
-  done: BehaviorSubject<any> = new BehaviorSubject([
-    {'id': 5, 'title': "Brush teeth", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
-    {'id': 6, 'title': "Take a shower", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
-    {'id': 7, 'title': "Check email", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
-    {'id': 8, 'title': "Walk dog", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
-  ]);
+  done: BehaviorSubject<any> = new BehaviorSubject([]);
 
-  inprogress: BehaviorSubject<any> = new BehaviorSubject([{'id': 9, 'title': "Get up", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'inprogress'},]);
+  inprogress: BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor() {
 
    }
+
+   public saveData(key: string, value: any) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  public getData(key: string) {
+    let data = JSON.parse(localStorage.getItem(key) as string);
+    console.log(data);
+    if (data){
+      if (key == 'todo'){
+          this.todo.next(data)
+      }else if (key == 'done'){
+          this.done.next(data)
+      }else if (key == 'inprogress'){
+          this.inprogress.next(data)
+      }
+    }
+  }
+
+  public removeData(key: string) {
+    localStorage.removeItem(key);
+  }
+
+  public clearData() {
+    localStorage.clear();
+  }
 }

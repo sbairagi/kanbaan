@@ -22,8 +22,8 @@ export class MyModalComponent implements OnInit {
   });
   status = [
     {'text': 'Todo', 'id': 'todo'},
-    {'text': 'Done', 'id': 'done'},
     {'text': 'In Progress', 'id': 'inprogress'},
+    {'text': 'Done', 'id': 'done'},
   ];
   todo: any = []
   done: any = []
@@ -66,6 +66,7 @@ export class MyModalComponent implements OnInit {
                 item['desc'] = this.editTodoForm.value.description
               }
             });
+            this.todoServices.saveData('todo', res)
           });
         }else if (this.editTodoForm.value.changeStatus ==  'done'){
           this.todoServices.done.subscribe(res => {
@@ -75,6 +76,7 @@ export class MyModalComponent implements OnInit {
                 item['desc'] = this.editTodoForm.value.description
               }
             });
+            this.todoServices.saveData('done', res)
           });
         }else if (this.editTodoForm.value.changeStatus == 'inprogress'){
           this.todoServices.inprogress.subscribe(res => {
@@ -84,16 +86,20 @@ export class MyModalComponent implements OnInit {
                 item['desc'] = this.editTodoForm.value.description
               }
             });
+            this.todoServices.saveData('inprogress', res)
           });
         }
       }
       else{
         if (this.preStatus == "todo"){
           this.todoServices.todo.next(this.todo.filter(x => x.id != this.id))
+          this.todoServices.saveData('todo', this.todo.filter(x => x.id != this.id))
         }else if (this.preStatus == "done") {
           this.todoServices.done.next(this.done.filter(x => x.id != this.id))
+          this.todoServices.saveData('done', this.done.filter(x => x.id != this.id))
         }else if(this.preStatus == 'inprogress') {
           this.todoServices.inprogress.next(this.inprogress.filter(x => x.id != this.id))
+          this.todoServices.saveData('inprogress', this.inprogress.filter(x => x.id != this.id))
         }
 
         if (this.editTodoForm.value.changeStatus === 'todo'){
@@ -109,6 +115,7 @@ export class MyModalComponent implements OnInit {
           })
           this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value,  "status": 'todo'})
           this.todoServices.todo.next(this.todos)
+          this.todoServices.saveData('todo', this.todos)
         } else if (this.editTodoForm.value.changeStatus === 'done'){
           this.todoServices.todo.subscribe(data => {
             this.id = data.length + 1
@@ -122,6 +129,7 @@ export class MyModalComponent implements OnInit {
           })
           this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value, "status": "done"})
           this.todoServices.done.next(this.todos)
+          this.todoServices.saveData('done', this.todos)
         } else if (this.editTodoForm.value.changeStatus === 'inprogress'){
           this.todoServices.todo.subscribe(data => {
             this.id = data.length + 1
@@ -135,6 +143,7 @@ export class MyModalComponent implements OnInit {
           })
           this.todos.push({'id': this.id, 'title': this.editTodoForm.controls['title'].value, "desc": this.editTodoForm.controls['description'].value, "status": "inprogress"})
           this.todoServices.inprogress.next(this.todos)
+          this.todoServices.saveData('inprogress', this.todos)
         }
       
       }
