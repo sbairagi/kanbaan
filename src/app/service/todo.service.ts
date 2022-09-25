@@ -17,7 +17,7 @@ export class TodoService {
   done: BehaviorSubject<any> = new BehaviorSubject([
     {'id': 5, 'title': "Brush teeth", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
     {'id': 6, 'title': "Take a shower", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
-    {'id': 7, 'title': "Check e-mail", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
+    {'id': 7, 'title': "Check email", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
     {'id': 8, 'title': "Walk dog", "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum asperiores", "status": 'done'},
   ]);
 

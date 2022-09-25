@@ -6,6 +6,9 @@
   
 <div class="container" cdkDropListGroup>
     <div class="row m-2">
+        <div class="text-center">
+            <h3 style="font-size: 28px;">Daily Activity Board</h3>
+        </div>
         <div class="col-md-4">
             <h3 class="text-center">Todo</h3>
                 <div class="container" class="p-2 m-1" style="background-color: blue; height: 400px;
@@ -29,30 +32,9 @@
                 </div>
         </div>
         <div class="col-md-4">
-            <h3 class="text-center">Done</h3>
-                    <div class="container" class="p-2 m-1" style="background-color: red; height: 400px;
-                overflow-y: scroll;"
-                    cdkDropList
-                    #todoList="cdkDropList"
-                    [cdkDropListData]="done"
-                    class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="example-box m-3" *ngFor="let item of done" cdkDrag>
-                        {{item.title}}
-                        <div>
-                            <small>{{item.desc}}</small>
-                        </div>
-                        <span>
-                            <i class="fa fa-edit m-2" style="font-size:48px; font-size:14px; color:green; cursor: pointer;" (click)="editNote(item)"></i>
-                            <i class="fa fa-trash m-1" (click)="deleteTodo(item.id, 'done')" style="color:red; cursor: pointer;" ></i>
-                        </span>
-                    </div>
-                </div>
-        </div>
-        <div class="col-md-4">
             <h3 class="text-center">In Progress</h3>
 
-                    <div class="container" class="p-2 m-1" style="background-color: greenyellow; height: 400px;
+                    <div class="container" class="p-2 m-1" style="background-color: orange; height: 400px;
                 overflow-y: scroll;"
                     cdkDropList
                     #todoList="cdkDropList"
@@ -67,6 +49,28 @@
                         <span>
                             <i class="fa fa-edit m-2" style="font-size:48px; font-size:14px; color:green; cursor: pointer;" (click)="editNote(item)"></i>
                             <i class="fa fa-trash m-1" (click)="deleteTodo(item.id, 'inprogress')" style="color:red; cursor: pointer;" ></i>
+                        </span>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-4">
+            
+            <h3 class="text-center">Done</h3>
+                    <div class="container" class="p-2 m-1" style="background-color: greenyellow; height: 400px;
+                overflow-y: scroll;"
+                    cdkDropList
+                    #todoList="cdkDropList"
+                    [cdkDropListData]="done"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box m-3" *ngFor="let item of done" cdkDrag>
+                        {{item.title}}
+                        <div>
+                            <small>{{item.desc}}</small>
+                        </div>
+                        <span>
+                            <i class="fa fa-edit m-2" style="font-size:48px; font-size:14px; color:green; cursor: pointer;" (click)="editNote(item)"></i>
+                            <i class="fa fa-trash m-1" (click)="deleteTodo(item.id, 'done')" style="color:red; cursor: pointer;" ></i>
                         </span>
                     </div>
                 </div>
