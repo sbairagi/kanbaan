@@ -23,7 +23,6 @@ export class TodoService {
 
   public getData(key: string) {
     let data = JSON.parse(localStorage.getItem(key) as string);
-    console.log(data);
     if (data){
       if (key == 'todo'){
           this.todo.next(data)
