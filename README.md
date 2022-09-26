@@ -4,8 +4,8 @@
 
 2. Technology used - Angular, Angular Material, Bootstrap, Html , Css, Typescript
 
-3. Description - It's a three column Dashbord Todo, In Progress and Done. click on add button to create task.
-	you can drag and drop activity cards in other columns. you can edit and delete your card by clicking on the edit and delete button.
+3. Description - It's a three column Dashbord - Todo, In Progress and Done. click on add button to add tasks.
+You can drag and drop activity cards in other columns. you can edit and delete your card by clicking on the edit and delete button.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
 
